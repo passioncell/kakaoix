@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <!--
+    ####################### 공통 레이아웃 테마 #######################
+    -->
+    <!-- Base Define -->
+    <definition name="base.definition" template="/WEB-INF/layout/basicTheme.jsp">
+        <put-attribute name="title" value="카카오IX 데모 쇼핑몰" />
+    </definition>
+
+    <!--&lt;!&ndash; Login Page Define &ndash;&gt;-->
+    <!--<definition name="auth.definition" template="/WEB-INF/layout/authTheme.jsp">-->
+        <!--<put-attribute name="title" value="카카오IX 데모 쇼핑몰" />-->
+    <!--</definition>-->
+
+
+    <!--
+    ####################### 개별 페이지 #######################
+    -->
+
+    <!-- 메인 페이지  -->
+    <definition name="home.main" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/home/main.jsp" />
+        <put-attribute name="header" value="/WEB-INF/tiles/home/header.jsp" />
+    </definition>
+
+    <!-- 예외 페이지  -->
+    <definition name="home.exceptionPage" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/home/exceptionPage.jsp" />
+        <put-attribute name="header" value="" />
+    </definition>
+
+    <!-- 로그인 페이지 -->
+    <definition name="member.signin" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/member/signin.jsp" />
+        <put-attribute name="header" value=""/>
+    </definition>
+
+    <!-- 회원가입 페이지 -->
+    <definition name="member.signup" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/member/signup.jsp" />
+        <put-attribute name="header" value=""/>
+    </definition>
+
+    <!-- 상품 리스트 페이지 -->
+    <definition name="product.list" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/product/list.jsp" />
+        <put-attribute name="header" value=""/>
+    </definition>
+
+    <!-- 상품 디테일 페이지 -->
+    <definition name="product.detail" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/product/detail.jsp" />
+        <put-attribute name="header" value=""/>
+    </definition>
+
+    <!-- 장바구니 리스트 -->
+    <definition name="product.cart" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/product/cart.jsp" />
+        <put-attribute name="header" value=""/>
+    </definition>
+
+    <!-- 구매내역 -->
+    <definition name="product.order.history" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/tiles/product/orderHistory.jsp" />
+        <put-attribute name="header" value=""/>
+    </definition>
+
+
+
+</tiles-definitions>

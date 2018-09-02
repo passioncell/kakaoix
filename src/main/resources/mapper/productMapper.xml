@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.passioncell.kakaoixshop.mapper.ProductMapper">
+    <!-- 특정 상품의 이미지 리스트 가져오기 -->
+    <select id="getProductImagesById" parameterType="int" resultType="String">
+        SELECT imageUrl as imageUrls FROM ProductImages WHERE fkProductId = #{productId}
+    </select>
+
+    <!-- 상품의 썸네일 이미지 가져오기 -->
+    <select id="getProductThumnail" parameterType="int" resultType="String">
+        SELECT imageUrl as thumnail FROM ProductImages WHERE fkProductId = #{productId} ORDER  BY imageUrl ASC LIMIT 1;
+    </select>
+
+    <!-- 모든 상품 목록 가져오기 -->
+    <select id="getProducts" parameterType="int" resultType="ProductDomain">
+        SELECT id, title, category, model, madeby, price, description FROM Product LIMIT 20;
+    </select>
+
+    <!-- 특정 상품 데이터 가져오기 -->
+    <select id="getProductOne" parameterType="int" resultType="ProductDomain">
+        SELECT id, title, category, model, madeby, price, description FROM Product WHERE id = #{productId}
+    </select>
+
+    <!-- 장바구니에 상품 저장하기 -->
+    <insert id="saveCart" parameterType="CartDomain">
+        INSERT INTO Cart(ea, isEndOfTransaction, fkMemberId, fkProductId) VALUES(#{ea}, #{isEndOfTransaction}, #{fkMemberId}, #{fkProductId})
+    </insert>
+
+    <!-- 장바구니 목록 가져오기 -->
+    <select id="getCarts" parameterType="int" resultType="CartListDomain">
+        SELECT Cart.id, Cart.ea, Product.title, Product.category,Product.model, Product.madeby,
+        Product.price, Product.description,Cart.fkMemberId as memberId,Cart.fkProductId as productId
+        FROM Cart, Product
+        WHERE Cart.fkProductId = Product.id
+        AND Cart.isEndOfTransaction = false
+        AND fkMemberId = #{memberId};
+    </select>
+
+    <!-- 장바구니 삭제 -->
+    <delete id="deleteCart" parameterType="int">
+        DELETE FROM Cart WHERE id = #{cartId}
+    </delete>
+
+    <!-- 장바구니 상품 거래완료 처리 -->
+    <update id="setCartEndOfTransaction" parameterType="int">
+        UPDATE Cart SET isEndOfTransaction=true WHERE fkMemberId = #{memberId}
+    </update>
+
+    <!-- 결재한 상품 저장 -->
+    <insert id="saveOrder" parameterType="OrderDomain">
+        INSERT INTO Orders(ea, orderAt, fkMemberId, fkProductId) VALUES(${ea}, #{orderAt}, #{memberId}, #{productId})
+    </insert>
+
+    <!-- 거래 내역 가져오기 -->
+    <select id="getOrderHistory" parameterType="int" resultType="OrderHistoryDomain">
+        SELECT Orders.id, ea, orderAt, title, category, model, madeby, price,
+        description,Orders.fkMemberId as memberId, Orders.fkProductId as productId
+        FROM Orders LEFT JOIN Product ON Orders.fkProductId=Product.id
+        WHERE Orders.fkMemberId = #{memberId} ORDER BY orderAt DESC;
+    </select>
+</mapper>
