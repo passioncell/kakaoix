@@ -15,8 +15,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CertificationInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/member/signin")
-                .excludePathPatterns("/member/signin")
+                .excludePathPatterns("/member/sign*")
                 .excludePathPatterns("/exceptionHandler/**")
                 .excludePathPatterns("/static/**");
     }
